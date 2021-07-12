@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dc-business-consumer-email
+  name: dc-business-consumer-email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dc-business-consumer-email
+  template:
+    metadata:
+      labels:
+        app: dc-business-consumer-email
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
+          value: Microsoft.AspNetCore.ApplicationInsights.HostingStartup
+        - name: RABBIT_HOSTNAME
+          value: rabbitmq
+        image: imorentals.azurecr.io/dc/business/consumer.email:dev
+        name: dc-business-consumer-email
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+      
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dc-business-consumer-email
+spec:
+  type: ClusterIP
+  ports:
+    - port: 81
+  selector:
+    app: dc-business-consumer-email

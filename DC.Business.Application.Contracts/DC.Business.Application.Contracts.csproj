@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\Account\" />
+    <Folder Include="Dtos\Account\" />
+    <Folder Include="Interfaces\Organization\Users\" />
+    <Folder Include="Dtos\Constants\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="NEST" Version="7.9.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DC.Core.Contracts\DC.Core.Contracts.csproj" />
+  </ItemGroup>
+</Project>

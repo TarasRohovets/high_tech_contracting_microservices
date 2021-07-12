@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="CreateDatabaseQueries\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DC.Business.Domain\DC.Business.Domain.csproj" />
+    <ProjectReference Include="..\DC.Core\DC.Core.csproj" />
+    <ProjectReference Include="..\DC.Core.DataAccess.MySql\DC.Core.DataAccess.MySql.csproj" />
+    <ProjectReference Include="..\DC.Business.Application.Contracts\DC.Business.Application.Contracts.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="SQLStatements\Organization\Images\DeletePropertyPhoto.sql" />
+    <None Remove="SQLStatements\Organization\Images\InsertPropertyPhoto.sql" />
+    <None Remove="SQLStatements\Organization\Listing\ApprovePropertyForAdminService.sql" />
+    <None Remove="SQLStatements\Organization\Listing\BlockPropertyByAdminService.sql" />
+    <None Remove="SQLStatements\Organization\Listing\GetPropertyByEmail.sql" />
+    <None Remove="SQLStatements\Organization\Listing\GetPropertyById.sql" />
+    <None Remove="SQLStatements\Organization\Users\DeleteUserProfilePhoto.sql" />
+    <None Remove="SQLStatements\Organization\Users\GetUserByKey.sql" />
+    <None Remove="SQLStatements\Organization\Users\InsertUser.sql" />
+    <None Remove="SQLStatements\Organization\Users\GetUserByNameAndPasswords.sql" />
+    <None Remove="SQLStatements\Organization\Users\UpdateUser.sql" />
+    <None Remove="SQLStatements\Organization\Users\GetUserById.sql" />
+    <None Remove="SQLStatements\Organization\Users\GetUserByEmail.sql" />
+    <None Remove="SQLStatements\Organization\Users\SearchUsers.sql" />
+    <None Remove="SQLStatements\Organization\Listing\InsertProperty.sql" />
+    <None Remove="SQLStatements\Organization\Listing\GetTypes.sql" />
+    <None Remove="SQLStatements\Organization\Listing\GetPropertyTypes.sql" />
+    <None Remove="SQLStatements\Organization\Listing\GetPropertiesByUserBasic.sql" />
+    <None Remove="SQLStatements\Organization\Listing\GetPropertyByUserId.sql" />
+    <None Remove="SQLStatements\Organization\Listing\DeletePropertyByUserId.sql" />
+    <None Remove="SQLStatements\Organization\Listing\GetOperationTypes.sql" />
+    <None Remove="SQLStatements\Organization\Users\UpdateUserProfilePhoto.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="SQLStatements\Organization\Listing\GetOperationTypes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SQLStatements\Organization\Images\DeletePropertyPhoto.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Images\InsertPropertyPhoto.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\ApprovePropertyForAdminService.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\BlockPropertyByAdminService.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\SearchPropertiesForAdmin.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\CountPropertiesForAdmin.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\GetPropertyByEmail.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\GetPropertyById.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\DeleteUserProfilePhoto.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\GetUserByKey.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\InsertUser.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\GetUserByEmailAndPasswords.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\UpdateUser.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\GetUserById.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\GetUserByEmail.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\SearchUsers.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\InsertProperty.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\GetPropertyTypes.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\GetPropertiesByUserBasic.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\GetPropertyByUserId.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\DeletePropertyByUserId.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Listing\GetOperationTypes.sql" />
+    <EmbeddedResource Include="SQLStatements\Organization\Users\UpdateUserProfilePhoto.sql" />
+  </ItemGroup>
+</Project>

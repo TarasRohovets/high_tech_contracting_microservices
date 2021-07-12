@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: email
+  name: email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email
+  template:
+    metadata:
+      labels:
+        app: email
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
+          value: Microsoft.AspNetCore.ApplicationInsights.HostingStartup
+        - name: RABBIT_HOSTNAME
+          value: rabbitmq1
+        image: dcbusinessemail:latest
+        name: email
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 200Mi
+      
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: email
+spec:
+  type: ClusterIP
+  ports:
+    - port: 81
+  selector:
+    app: email

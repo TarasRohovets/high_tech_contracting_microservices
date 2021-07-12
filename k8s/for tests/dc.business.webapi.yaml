@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dc-business-webapi
+  labels:
+    app: dc-business-webapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dc-business-webapi
+  template:
+    metadata:
+      labels:
+        app: dc-business-webapi
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_HOSTINGSTARTUPASSEMBLIES
+          value: Microsoft.AspNetCore.ApplicationInsights.HostingStartup
+        - name: RABBIT_HOSTNAME
+          value: rabbitmq
+        name: dc-business-webapi
+        image: imorentals.azurecr.io/dcbusiness:dev
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dc-business-webapi
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: dc-business-webapi

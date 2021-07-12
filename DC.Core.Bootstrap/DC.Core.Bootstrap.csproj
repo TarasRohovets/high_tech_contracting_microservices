@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DC.Core.Contracts\DC.Core.Contracts.csproj" />
+    <ProjectReference Include="..\DC.Core.Messaging.RabbitMQ\DC.Core.Messaging.RabbitMQ.csproj" />
+    <ProjectReference Include="..\DC.Core.Security.Jwt\DC.Core.Security.Jwt.csproj" />
+  </ItemGroup>
+</Project>

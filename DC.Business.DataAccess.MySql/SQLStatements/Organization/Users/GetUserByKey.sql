@@ -1,0 +1,10 @@
+﻿SELECT
+     ID,
+     NAME,
+     EMAIL,
+     CREATIONDATE,
+     UPDATEDATE,
+     DELETED
+FROM Users
+WHERE (@UserName IS NULL OR USERNAME = @UserName)
+AND DELETED = 0

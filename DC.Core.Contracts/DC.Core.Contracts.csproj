@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Infrastructure\DependencyInjection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Application\Pipeline\Dtos\Output\" />
+    <Folder Include="Application\Pipeline\Dtos\Errors\" />
+    <Folder Include="Infrastructure\DataAccess\" />
+    <Folder Include="Infrastructure\DependencyInjection\" />
+    <Folder Include="Infrastructure\Security\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
+  </ItemGroup>
+</Project>

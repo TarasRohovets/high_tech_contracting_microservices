@@ -1,0 +1,120 @@
+version: '3.4'
+
+services:
+  dc.business.webapi1:
+    image: ${DOCKER_REGISTRY-}dcbusiness
+    container_name: webapi1
+    build:
+      context: .
+      dockerfile: DC.Business.WebApi/Dockerfile
+    environment:
+      - RABBIT_HOSTNAME=rabbitmq1
+    restart: always
+    depends_on:
+      rabbitmq1:
+        condition: service_healthy
+    links: 
+        - rabbitmq1
+    ports:
+      - 80:80
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    networks:
+      - esnetwork
+
+  db1:
+    image: mysql:latest
+    container_name: db1
+    environment:
+      MYSQL_DATABASE: properties
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbuserpassword
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    restart: always
+    networks:
+      - esnetwork
+
+  elasticsearch1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
+    container_name: elasticsearch1
+    environment:
+      - node.name=elasticsearch1
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - esnetwork
+
+  kibana1:
+    image: docker.elastic.co/kibana/kibana:7.9.2
+    container_name: kibana1
+    ports:
+      - "5601:5601"
+    networks:
+      - esnetwork
+    depends_on:
+      - elasticsearch1
+
+  dc.business.consumer.email1:
+    image: dcbusinessemail
+    container_name: email1
+    environment:
+      - RABBIT_HOSTNAME=rabbitmq1
+    build:
+      context: .
+      dockerfile: DC.Business.Consumer.Email/Dockerfile
+    restart: always
+    depends_on:
+      rabbitmq1:
+        condition: service_healthy
+    links: 
+        - rabbitmq1
+    ports:
+      - "81:81"
+    networks:
+      - esnetwork
+
+
+  rabbitmq1:
+    image: rabbitmq:3-management-alpine
+    hostname: rabbitmq1
+    container_name: rabbitmq1
+    restart: always
+    healthcheck:
+      test: rabbitmq-diagnostics -q status
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    environment:
+      ACCEPT_EULA: "Y"
+      RABBITMQ_DEFAULT_USER: Administrator
+      RABBITMQ_DEFAULT_PASS: Password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - esnetwork
+
+volumes:
+    dbdata:
+    esdata:
+        driver: local
+
+networks:
+    esnetwork:
+        driver: bridge

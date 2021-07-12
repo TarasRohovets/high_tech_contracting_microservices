@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DC.Business.Application.Contracts\DC.Business.Application.Contracts.csproj" />
+    <ProjectReference Include="..\DC.Business.Application.Services\DC.Business.Application.Services.csproj" />
+    <ProjectReference Include="..\DC.Business.Domain\DC.Business.Domain.csproj" />
+    <ProjectReference Include="..\DC.Business.ElasticSearch\DC.Business.ElasticSearch.csproj" />
+    <ProjectReference Include="..\DC.Business.DataAccess.MySql\DC.Business.DataAccess.MySql.csproj" />
+  </ItemGroup>
+</Project>

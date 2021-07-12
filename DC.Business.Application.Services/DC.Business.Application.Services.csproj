@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Account\" />
+    <Folder Include="Pipeline\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Organization\Users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Account\Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DC.Core\DC.Core.csproj" />
+    <ProjectReference Include="..\DC.Business.Application.Contracts\DC.Business.Application.Contracts.csproj" />
+    <ProjectReference Include="..\DC.Business.Domain\DC.Business.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.8.0" />
+    <PackageReference Include="NEST" Version="7.9.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.9" />
+  </ItemGroup>
+</Project>
