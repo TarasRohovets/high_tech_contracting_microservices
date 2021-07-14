@@ -1,6 +1,7 @@
 using DC.Business.Consumer.Email.Dtos;
 using DC.Business.Consumer.Email.SendGrid;
 using DC.Core.Contracts.Infrastructure.RabbitMQ;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -25,11 +26,13 @@ namespace DC.Business.Consumer.Email
         //private const string QueueName = "rabbitmq.emailworker";
 
         IMessageHandler _messageHandler;
+        private string _sendGridKey = string.Empty;
 
-        public EmailManager(IMessageHandler messageHandler, ILogger<EmailManager> logger)
+        public EmailManager(IConfiguration configuration, IMessageHandler messageHandler, ILogger<EmailManager> logger)
         {
             _messageHandler = messageHandler;
             _logger = logger;
+            _sendGridKey = configuration.GetConnectionString("SendGrid.ApiKey");
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -52,7 +55,7 @@ namespace DC.Business.Consumer.Email
                 _logger.LogInformation($"Sending #{emailIcomingMessage} confirmation email to [{emailIcomingMessage}].");
 
                 // await Task.Delay(new Random().Next(1, 3) * 1000, stoppingToken); // simulate an async email process
-                var emailService = new SendGridService();
+                var emailService = new SendGridService(_sendGridKey);
                 await emailService.Execute();
             }
             catch (Exception ex)

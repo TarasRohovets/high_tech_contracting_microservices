@@ -9,12 +9,15 @@ namespace DC.Business.Consumer.Email.SendGrid
 {
     public class SendGridService
     {
-        public SendGridService() { }
+        private string _sendGridKey;
+        public SendGridService(string sendGridKey) {
+            _sendGridKey = sendGridKey;
+        }
 
         public async Task Execute()
         {
-            var apiKey = Environment.GetEnvironmentVariable("SendGrid.ApiKey");
-            var client = new SendGridClient(apiKey);
+            // var apiKey = Environment.GetEnvironmentVariable("SendGrid.ApiKey");
+            var client = new SendGridClient(_sendGridKey);
             var from = new EmailAddress("", "Prince");
             var subject = "yooooooooooo wassssappppp";
             var to = new EmailAddress("", "Princess");

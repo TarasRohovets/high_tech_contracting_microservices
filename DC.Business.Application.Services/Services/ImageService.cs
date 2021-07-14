@@ -28,6 +28,13 @@ namespace DC.Business.Application.Services.Services
         private string _strContainerName = "images";
         private BlobContainerClient _containerClient;
 
+        //private string blobUrlName = string.Empty;
+        //private string accountKey = string.Empty;
+        //protected const string _blobUrlName = "ImageBlobName";
+        //protected const string _accountKey = "AccountKeyImage";
+
+        private IConfigurationSection azureSection ;
+
         public ImageService(IConfiguration configuration, IUserRepository userRepository, IListingRepository listingRepository, IImageRepository imageRepository, IPropertiesElasticRepository propertiesElasticRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
@@ -36,7 +43,10 @@ namespace DC.Business.Application.Services.Services
             _propertiesElasticRepository = propertiesElasticRepository ?? throw new ArgumentNullException(nameof(propertiesElasticRepository));
             _connectionString = configuration.GetConnectionString(_connectionStringKey);
             _blobServiceClient = new BlobServiceClient(_connectionString);
+            azureSection = configuration.GetSection("Azure");
             _containerClient = _blobServiceClient.GetBlobContainerClient(_strContainerName);
+            // blobUrlName = configuration.GetSection(_blobUrlName);
+            // accountKey = configuration.GetConnectionString(_accountKey);
         }
 
         public async Task<List<string>> UploadPropertyImagesToBlob(List<IFormFile> photos, long propertyId)
@@ -179,18 +189,18 @@ namespace DC.Business.Application.Services.Services
             {
                 string fileName = this.GenerateFileName(strFileName);
 
-                var blobUrlName = Environment.GetEnvironmentVariable("Azure.ImageBlobName");
-                var accountKey = Environment.GetEnvironmentVariable("Azure.AccountKeyImage");
+                var blobUrlName = azureSection.GetSection("ImageBlobName");
+                var accountKey = azureSection.GetSection("AccountKeyImage");
 
                 // Create a URI to the blob
                 Uri blobUri = new Uri("https://" +
-                                      blobUrlName +
+                                      blobUrlName.Value +
                                       ".blob.core.windows.net/" +
                                       _strContainerName +
                                       "/" + fileName);
 
                 StorageSharedKeyCredential storageCredentials =
-                      new StorageSharedKeyCredential(blobUrlName, accountKey);
+                      new StorageSharedKeyCredential(blobUrlName.Value, accountKey.Value);
 
                 if (fileName != null && fileData != null)
                 {
